@@ -1,0 +1,27 @@
+<!-- This is optional, you can define any template you want -->
+{{ define "header" }}
+
+<header>
+	<h3>tblog demo</h3>
+</header>
+
+<hr>
+
+{{ end }}
+
+<!-- Index homepage gets *Blog -->
+{{ define "index" }}
+
+<header>
+	<h1>tblog demo</h1>
+	<p>
+	Just blog. Nothing else. Well, maybe a few articles here and there will
+	do. Maybe even some hyperlinks, eh?
+	</p>
+</header>
+
+<main>
+	{{ index . }}
+</main>
+
+{{ end }}

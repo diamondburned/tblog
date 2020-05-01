@@ -1,0 +1,19 @@
+Welcome to my blog
+
+Welcome to my blog! My blog really has nothing. It also uses the Go markup
+format, which is very boring.
+
+Code demo
+
+Below is a lame piece of Go code.
+
+	package main
+
+	func main() {
+		fmt.Print("Hello, 世界")
+	}
+
+Some smart programming quotes
+
+Go bad, Rust bad. C good. C++ based.
+

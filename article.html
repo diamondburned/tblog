@@ -1,0 +1,11 @@
+<!-- Article gets *Article -->
+{{ define "article" }}
+
+{{ template "header" }}
+
+<article>
+	<h1>{{ .Title }}</h1>
+	{{ render .Body }}
+</article>
+
+{{ end }}
