@@ -60,14 +60,16 @@ func (p *Page) RenderToFile(path, name string, data interface{}) error {
 }
 
 func main() {
-	var tmpl = parseTemplates()
-
 	var output string
 	flag.StringVar(&output, "o", "./public", "The folder to generate HTML files to.")
 	var postDir string
 	flag.StringVar(&postDir, "d", "./posts", "The folder to read posts from.")
+	var tmplDir string
+	flag.StringVar(&tmplDir, "t", "./templates", "The folder to read templates from.")
 
 	flag.Parse()
+
+	var tmpl = parseTemplates(tmplDir)
 
 	// Get the absolute path
 	o, err := filepath.Abs(output)
@@ -119,10 +121,10 @@ func join(paths ...string) string {
 	return filepath.Join(paths...)
 }
 
-func parseTemplates() (t *template.Template) {
+func parseTemplates(dir string) (t *template.Template) {
 	t = template.New("page")
 	t = t.Funcs(Funcs)
-	t = template.Must(t.ParseGlob("*.html"))
+	t = template.Must(t.ParseGlob(filepath.Join(dir, "*")))
 	t = template.Must(t.Parse(Index))
 	return
 }
