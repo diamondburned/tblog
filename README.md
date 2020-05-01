@@ -1,9 +1,10 @@
-- "head" and "article" must be defined as templates.
-- Everything else is optional.
-
 # tblog
 
 A simple blog generator made to be forked.
+
+![Homepage](https://i.imgur.com/H9oBjxy.png)
+
+![Article](https://i.imgur.com/DXknZGR.png)
 
 ## Quick Start
 
@@ -59,7 +60,7 @@ following templates.
 
 #### head.html
 
-This file contains the head content. It uses the [Sakura Dark CSS](https://github.com/oxalorg/sakura) by default.
+This file contains the head content. It uses the [Sakura framework](https://github.com/oxalorg/sakura) by default.
 
 #### index.html
 
