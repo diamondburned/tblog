@@ -37,6 +37,11 @@ Paragraph. More sentences.
 !https://images-start-with.an/exclam.jpeg
 ```
 
+## Deploying
+
+Use your preferred web service to host the `public/` directory of your forked
+repository.
+
 ## Modding
 
 This blog was made simple so you could easily modify and extend it.
