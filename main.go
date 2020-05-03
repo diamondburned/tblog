@@ -61,7 +61,7 @@ func (p *Page) RenderToFile(path, name string, data interface{}) error {
 
 func main() {
 	var output string
-	flag.StringVar(&output, "o", "./public", "The folder to generate HTML files to.")
+	flag.StringVar(&output, "o", "./docs", "The folder to generate HTML files to.")
 	var postDir string
 	flag.StringVar(&postDir, "d", "./posts", "The folder to read posts from.")
 	var tmplDir string
