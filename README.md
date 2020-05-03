@@ -35,6 +35,8 @@ Paragraph. More sentences.
 	Code block goes here
 	More code goes here
 
+This URL is automatically highlighted. https://google.com.
+
 !https://images-start-with.an/exclam.jpeg
 ```
 
@@ -49,7 +51,7 @@ This blog was made simple so you could easily modify and extend it.
 
 ### Requirements
 
-All HTML files (globbed with `*.html` in the current directory) must declare the
+All HTML files (globbed with `templates/*.html`) must declare the
 following templates.
 
 - `header` will be wrapped inside `<head>` on all pages.

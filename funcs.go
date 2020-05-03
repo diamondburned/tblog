@@ -25,8 +25,6 @@ var (
 			</ul>
 		</section>
 	`))
-
-	mdLink = regexp.MustCompile(`!<a href="(\S+)">\S+</a>`)
 )
 
 var Funcs = template.FuncMap{
@@ -88,11 +86,20 @@ var Funcs = template.FuncMap{
 
 		funcBuf.Reset()
 		markup = parseLinks(markup)
+		markup = parseh3(markup)
 
 		return template.HTML(markup)
 	},
 }
 
-func parseLinks(inputString string) string {
-	return mdLink.ReplaceAllString(inputString, `<img src="$1" />`)
+var mdLink = regexp.MustCompile(`!<a href="(\S+)">\S+</a>`)
+
+func parseLinks(html string) string {
+	return mdLink.ReplaceAllString(html, `<img src="$1" />`)
+}
+
+var h3regex = regexp.MustCompile(`<h3 id="(hdr-\w+)">.+</h3>`)
+
+func parseh3(html string) string {
+	return h3regex.ReplaceAllString(html, `<a class="permalink" href="#$1">$0</a>`)
 }
