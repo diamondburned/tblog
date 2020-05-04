@@ -11,35 +11,22 @@ import (
 	"github.com/pkg/errors"
 )
 
-const Index = `
-<!DOCTYPE html>
+const HTMLPrefix = `<!DOCTYPE html>
 <html>
-	<head>{{ .Head }}</head>
-	<body>{{ .Body }}</body>
-</html>
-`
+	`
+const HTMLSuffix = `
+</html>`
 
 type Page struct {
 	*template.Template
-	Head template.HTML
-	Body template.HTML
-
 	buf bytes.Buffer
 }
 
-func NewPageWithHeader(tmpl *template.Template, headData interface{}) (*Page, error) {
-	var buf bytes.Buffer
-	defer buf.Reset()
-
-	if err := tmpl.ExecuteTemplate(&buf, "head", headData); err != nil {
-		return nil, err
-	}
-
+func NewPage(tmpl *template.Template) *Page {
 	return &Page{
 		Template: tmpl,
-		Head:     template.HTML(buf.String()),
-		buf:      buf,
-	}, nil
+		buf:      bytes.Buffer{},
+	}
 }
 
 func (p *Page) RenderToFile(path, name string, data interface{}) error {
@@ -47,16 +34,23 @@ func (p *Page) RenderToFile(path, name string, data interface{}) error {
 	if err != nil {
 		return errors.Wrap(err, "Failed to open/create file")
 	}
+	defer f.Close()
 
-	defer p.buf.Reset()
+	// Write the prefix first
+	if _, err := f.Write([]byte(HTMLPrefix)); err != nil {
+		return errors.Wrap(err, "Failed to write prefix")
+	}
 
-	if err := p.ExecuteTemplate(&p.buf, name, data); err != nil {
+	if err := p.ExecuteTemplate(f, name, data); err != nil {
 		return errors.Wrap(err, "Failed to render")
 	}
 
-	p.Body = template.HTML(p.buf.String())
+	// Write the suffix past.
+	if _, err := f.Write([]byte(HTMLSuffix)); err != nil {
+		return errors.Wrap(err, "Failed to write suffix")
+	}
 
-	return errors.Wrap(p.Execute(f, p), "Failed to render")
+	return nil
 }
 
 func main() {
@@ -92,11 +86,8 @@ func main() {
 		log.Fatalln("Failed to mkdir output:", err)
 	}
 
-	// Render the head.
-	p, err := NewPageWithHeader(tmpl, blog)
-	if err != nil {
-		log.Fatalln("Failed to render header:", err)
-	}
+	// Make a new page constructor.
+	p := NewPage(tmpl)
 
 	// Render the homepage.
 	var hppath = join(output, "index.html")
@@ -125,6 +116,5 @@ func parseTemplates(dir string) (t *template.Template) {
 	t = template.New("page")
 	t = t.Funcs(Funcs)
 	t = template.Must(t.ParseGlob(filepath.Join(dir, "*")))
-	t = template.Must(t.Parse(Index))
 	return
 }

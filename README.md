@@ -57,9 +57,8 @@ This blog was made simple so you could easily modify and extend it.
 All HTML files (globbed with `templates/*.html`) must declare the
 following templates.
 
-- `header` will be wrapped inside `<head>` on all pages.
-- `index` will be put on the homepage (`index.html`).
-- `article` will be put on every article (`article.html`).
+- `index` will be the homepage (defined in `templates/index.html`).
+- `article` will be every article (defined in `templates/article.html`).
 
 ### Files
 
@@ -70,8 +69,7 @@ This file contains the head content. It uses the [Sakura framework](https://gith
 #### index.html
 
 This is the main file. It contains the `index` template. As an example, it
-declares an extra `header` template, which other files call by writing `{{
-template "header" }}`.
+declares an extra `head` template that `article.html` uses.
 
 This file demonstrates the built-in `index` function declared in `funcs.go`.
 This function generates an index of parsed articles.

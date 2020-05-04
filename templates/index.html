@@ -1,27 +1,50 @@
-<!-- This is optional, you can define any template you want -->
-{{ define "header" }}
+<!-- Index homepage gets *Blog -->
 
-<header>
-	<h3>tblog demo</h3>
-</header>
+{{ define "desc" }}
+	Just blog. Nothing else. Well, maybe a few articles here and there will
+	do. Maybe even some hyperlinks, eh
+{{ end }}
 
-<hr>
+{{ define "index" }}
+
+<head>
+	{{ template "head" }}
+
+	<title>tblog demo</title>
+	<meta property="og:title"       content="Homepage"            />
+	<meta property="og:description" content="{{template "desc"}}" />
+</head>
+
+<body>
+	<header>
+		<h1>tblog demo</h1>
+		<p>{{ template "desc" }}</p>
+	</header>
+	
+	<main>
+		{{ index . }}
+	</main>
+</body>
 
 {{ end }}
 
-<!-- Index homepage gets *Blog -->
-{{ define "index" }}
 
-<header>
-	<h1>tblog demo</h1>
-	<p>
-	Just blog. Nothing else. Well, maybe a few articles here and there will
-	do. Maybe even some hyperlinks, eh?
-	</p>
-</header>
+<!-- This is optional, you can define any template you want -->
 
-<main>
-	{{ index . }}
-</main>
+<!-- common tags inside <head> -->
+{{ define "head" }}
+
+<link rel="stylesheet" href="https://unpkg.com/sakura.css/css/normalize.css" type="text/css">
+<link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+
+<meta property="og:site_name" content="tblog demo" />
+
+<!-- proper scaling for mobile devices -->
+<meta name="viewport" content="width=device-width, initial-scale=1.2">
+
+<style>
+	a.permalink { color: inherit; }
+	pre { tab-size: 4; }
+</style>
 
 {{ end }}

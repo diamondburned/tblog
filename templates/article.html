@@ -1,11 +1,25 @@
 <!-- Article gets *Article -->
 {{ define "article" }}
 
-{{ template "header" }}
+<head>
+	{{ template "head" }} <!-- from index.html -->
 
-<article>
-	<h1>{{ .Title }}</h1>
-	{{ render .Body }}
-</article>
+	<title>{{.Title}} - tblog demo</title>
+	<meta property="og:title"       content="{{.Title}}"         />
+	<meta property="og:description" content="{{synopsis .Body}}" />
+</head>
+
+<body>
+	<header>
+		<h3>tblog demo</h3>
+	</header>
+
+	<hr>
+
+	<article>
+		<h1>{{ .Title }}</h1>
+		{{ render .Body }}
+	</article>
+</body>
 
 {{ end }}

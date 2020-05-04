@@ -73,6 +73,11 @@ var Funcs = template.FuncMap{
 		return template.HTML(funcBuf.String())
 	},
 
+	// synopsis returns the first sentence cleaned.
+	"synopsis": func(body string) string {
+		return doc.Synopsis(body)
+	},
+
 	// render converts string to HTML
 	"render": func(markup string) template.HTML {
 
