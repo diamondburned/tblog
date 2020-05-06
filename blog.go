@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"io/ioutil"
 	"log"
 	"os"
@@ -22,8 +21,9 @@ type Article struct {
 	Slug string // filename
 	Path string
 
-	Title string // first line always
-	Body  string // without first line
+	Title string            // first line always
+	Meta  map[string]string // additional metadata
+	Body  string
 }
 
 func ParseArticles(postDir string) ([]Article, error) {
@@ -50,10 +50,18 @@ func ParseArticles(postDir string) ([]Article, error) {
 		// Form a path based on the slug.
 		articles[i].Path = articles[i].Slug + ".html"
 
-		// Try and get the newline for a blog post.
-		if newLine := bytes.IndexByte(b, '\n'); newLine > 1 {
-			// Set the title and body.
-			articles[i].Title = text[:newLine]
+		if newLine := strings.Index(text, "\n\n"); newLine > 1 {
+			// Set title, parse meta, and get body.
+			head := strings.Split(text[:newLine], "\n")
+			articles[i].Title = head[0]
+			// Metadata are "key: value" lines.
+			articles[i].Meta = map[string]string{}
+			for _, line := range head[1:] {
+				sep := strings.IndexByte(line, ':')
+				if sep >= 0 {
+					articles[i].Meta[line[:sep]] = strings.TrimSpace(line[sep+1:])
+				}
+			}
 			articles[i].Body = text[newLine:]
 
 			log.Println("Parsed article", articles[i].Title)
