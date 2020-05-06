@@ -27,11 +27,13 @@ URL slug.
 
 #### Markup
 
-tblog uses the GoDoc format with a small extension. The grammar could be
+tblog uses the GoDoc format with some small extensions. The grammar could be
 generalized as following:
 
 ```
 Title
+Date: Whenever
+Other article metadata: the whole rest of the line
 
 Paragraph. More sentences.
 
