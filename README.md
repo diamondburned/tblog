@@ -10,9 +10,8 @@ A simple blog generator made to be forked.
 
 ### Setting Up
 
-1. Fork the repository.
-2. `git clone https://github.com/diamondburned/tblog && cd tblog`
-3. `go run .`
+1. Fork and clone the repository.
+3. `cd tblog && go run .`
 4. Go to docs/
 
 #### Why "docs"?
